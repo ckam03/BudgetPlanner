@@ -12,11 +12,10 @@ import { ExpenseService } from '../../services/expense.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-add-expense',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
-  templateUrl: './add-expense.component.html',
-  styleUrl: './add-expense.component.css',
+    selector: 'app-add-expense',
+    imports: [FormsModule, ReactiveFormsModule, CommonModule],
+    templateUrl: './add-expense.component.html',
+    styleUrl: './add-expense.component.css'
 })
 export class AddExpenseComponent {
   @ViewChild('myModal', { static: true })

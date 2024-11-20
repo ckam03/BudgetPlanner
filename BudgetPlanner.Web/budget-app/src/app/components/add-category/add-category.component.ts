@@ -19,11 +19,10 @@ import {
 import { DashboardData } from '../../models/dashboard-data';
 
 @Component({
-  selector: 'app-add-category',
-  standalone: true,
-  imports: [LucideAngularModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './add-category.component.html',
-  styleUrl: './add-category.component.css',
+    selector: 'app-add-category',
+    imports: [LucideAngularModule, FormsModule, ReactiveFormsModule],
+    templateUrl: './add-category.component.html',
+    styleUrl: './add-category.component.css'
 })
 export class AddCategoryComponent implements OnDestroy {
   dashboardService = inject(DashboardService);

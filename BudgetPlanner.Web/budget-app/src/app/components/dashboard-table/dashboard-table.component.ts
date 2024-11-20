@@ -13,11 +13,10 @@ import { CommonModule } from '@angular/common';
 import { AddExpenseComponent } from '../add-expense/add-expense.component';
 
 @Component({
-  selector: 'app-dashboard-table',
-  standalone: true,
-  imports: [LucideAngularModule, CommonModule, AddExpenseComponent],
-  templateUrl: './dashboard-table.component.html',
-  styleUrl: './dashboard-table.component.css',
+    selector: 'app-dashboard-table',
+    imports: [LucideAngularModule, CommonModule, AddExpenseComponent],
+    templateUrl: './dashboard-table.component.html',
+    styleUrl: './dashboard-table.component.css'
 })
 export class DashboardTableComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
