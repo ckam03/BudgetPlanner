@@ -1,0 +1,15 @@
+<form (ngSubmit)="createCategory()" [formGroup]="categoryGroup">
+  <lucide-icon [img]="PlusCircleIcon" size="16" tabindex="0"></lucide-icon>
+  <div
+    tabindex="0"
+    class="dropdown-content menu bg-slate-800 rounded-box z-[1] w-52 p-2 shadow"
+  >
+    <input
+      formControlName="categoryInput"
+      type="text"
+      placeholder="Add Category"
+      class="input input-bordered w-full max-w-xs bg-slate-700"
+    />
+    <button type="submit" class="btn btn-primary bg-teal-500 mt-6">Add</button>
+  </div>
+</form>

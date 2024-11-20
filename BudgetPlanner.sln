@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.API", "BudgetPlanner.API\BudgetPlanner.API.csproj", "{BE92BDF1-FF34-43B4-A75C-99A3CE5DC217}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BudgetPlanner.Tests", "BudgetPlanner.Tests", "{AF6D8260-B897-4F09-8953-2B3260F060C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner.Tests", "BudgetPlanner.Tests\BudgetPlanner.Tests\BudgetPlanner.Tests.csproj", "{44F1B2B2-6D11-4326-A83A-A1D587827328}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE92BDF1-FF34-43B4-A75C-99A3CE5DC217}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE92BDF1-FF34-43B4-A75C-99A3CE5DC217}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE92BDF1-FF34-43B4-A75C-99A3CE5DC217}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE92BDF1-FF34-43B4-A75C-99A3CE5DC217}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44F1B2B2-6D11-4326-A83A-A1D587827328}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44F1B2B2-6D11-4326-A83A-A1D587827328}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44F1B2B2-6D11-4326-A83A-A1D587827328}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44F1B2B2-6D11-4326-A83A-A1D587827328}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{44F1B2B2-6D11-4326-A83A-A1D587827328} = {AF6D8260-B897-4F09-8953-2B3260F060C2}
+	EndGlobalSection
+EndGlobal
