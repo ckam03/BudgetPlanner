@@ -36,8 +36,8 @@ export class DashboardService {
       mode: 'cors',
     });
     return this.httpClient.delete<string[]>(`http://localhost:5204/category`, {
-      body: { ids: categoryIds },
       headers,
+      body: { ids: categoryIds },
     });
   }
 }

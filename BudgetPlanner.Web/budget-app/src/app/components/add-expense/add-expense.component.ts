@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, Input, signal, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  signal,
+  ViewChild,
+  input,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -7,21 +14,21 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Expense } from '../../models/expense';
+import { CreateExpense, Expense } from '../../models/expense';
 import { ExpenseService } from '../../services/expense.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'app-add-expense',
-    imports: [FormsModule, ReactiveFormsModule, CommonModule],
-    templateUrl: './add-expense.component.html',
-    styleUrl: './add-expense.component.css'
+  selector: 'app-add-expense',
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  templateUrl: './add-expense.component.html',
+  styleUrl: './add-expense.component.css',
 })
 export class AddExpenseComponent {
   @ViewChild('myModal', { static: true })
   myModal!: ElementRef<HTMLDialogElement>;
 
-  @Input() categoryId!: string;
+  readonly categoryId = input.required<string>();
 
   expenseFormGroup = new FormGroup({
     expenseName: new FormControl('', Validators.required),
@@ -34,11 +41,15 @@ export class AddExpenseComponent {
   });
 
   private subscriptions = new Subscription();
+  private expenseService: ExpenseService;
 
-  constructor(private expenseService: ExpenseService) {}
+  constructor(expenseService: ExpenseService) {
+    this.expenseService = expenseService;
+  }
 
   openModal() {
     this.myModal.nativeElement.showModal();
+    console.log(this.categoryId());
   }
 
   closeModal() {
@@ -48,8 +59,7 @@ export class AddExpenseComponent {
   submitExpense() {
     if (this.expenseFormGroup.valid) {
       const date = new Date(this.expenseFormGroup.value.dueDate as string);
-      console.log(this.categoryId);
-      const expense: Expense = {
+      const expense: CreateExpense = {
         name: this.expenseFormGroup.value.expenseName as string,
         budget: Number(this.expenseFormGroup.value.budget),
         activity: Number(this.expenseFormGroup.value.availableAmount),
@@ -61,8 +71,10 @@ export class AddExpenseComponent {
           month: date.getMonth(),
           day: date.getDate(),
         },
-        id: this.categoryId,
+        id: this.categoryId(),
       };
+
+      console.log(this.expenseFormGroup.value.recurring);
 
       const expenseSubscription = this.expenseService
         .addExpense(expense)

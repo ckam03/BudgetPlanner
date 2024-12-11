@@ -1,22 +1,20 @@
-﻿using BudgetPlanner.API.Interfaces;
+﻿using BudgetPlanner.API.Features.Categories;
+using BudgetPlanner.API.Features.Expenses;
+using BudgetPlanner.API.Interfaces;
 
 namespace BudgetPlanner.API.Extensions;
 
 public static class EndpointExtensions
 {
-    public static WebApplication MapEndpoints(this WebApplication app)
+    public static void MapEndpoints(this WebApplication app)
     {
-        var endpoints = typeof(Program).Assembly
-            .GetTypes()
-            .Where(t => t.IsAssignableTo(typeof(IEndpoint)) && !t.IsAbstract && !t.IsInterface)
-            .Select(Activator.CreateInstance)
-            .Cast<IEndpoint>();
+        app.MapExpenseEndpoints();
+        app.MapCategoryEndpoints();
+    }
 
-        foreach (var endpoint in endpoints)
-        {
-            endpoint.MapEndpoint(app);
-        }
-
+    public static IEndpointRouteBuilder MapEndpoint<T>(this IEndpointRouteBuilder app) where T : IEndpoint
+    {
+        T.MapEndpoint(app);
         return app;
     }
 }

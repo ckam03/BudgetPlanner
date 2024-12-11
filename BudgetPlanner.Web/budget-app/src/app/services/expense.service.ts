@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Expense } from '../models/expense';
+import { CreateExpense, Expense } from '../models/expense';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +8,7 @@ import { Expense } from '../models/expense';
 export class ExpenseService {
   constructor(private httpClient: HttpClient) {}
 
-  addExpense(expense: Expense) {
+  addExpense(expense: CreateExpense) {
     console.log(expense);
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
