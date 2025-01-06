@@ -3,7 +3,7 @@ using BudgetPlanner.API.Interfaces;
 
 namespace BudgetPlanner.API.Features.Targets.Endpoints;
 
-public class CreateTargetEndpoint : IEndpoint
+public sealed class CreateTargetEndpoint : IEndpoint
 {
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -16,4 +16,4 @@ public class CreateTargetEndpoint : IEndpoint
     }
 }
 
-public record CreateTargetRequest(string Target);
+public sealed record CreateTargetRequest(string Target);

@@ -1,8 +1,10 @@
-using BudgetPlanner.API.Data;
+using BudgetPlanner.API.Features.Budget.Services;
 using BudgetPlanner.API.Features.Categories.Requests;
 using BudgetPlanner.API.Features.Categories.Responses;
+using BudgetPlanner.API.Features.Categories.Services;
 using BudgetPlanner.API.Interfaces;
-using BudgetPlanner.API.Models;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,18 +17,37 @@ public sealed class CreateCategoryEndpoint : IEndpoint
         app.MapPost("/", HandleAsync);
     }
 
-    public static async Task<Ok<CreateCategoryResponse>> HandleAsync(BudgetPlannerDbContext context,
-                                                                     [FromBody] CreateCategoryRequest request)
+    public static async Task<Results<Ok<CreateCategoryResponse>, ProblemHttpResult>> HandleAsync(
+        [FromBody] CreateCategoryRequest request,
+        BudgetService budgetService,
+        CategoryService categoryService,
+        IValidator<CreateCategoryRequest> validator
+    )
     {
-        Category category = new()
+        ValidationResult result = await validator.ValidateAsync(request);
+
+        if (!result.IsValid)
         {
-            Id = Guid.NewGuid(),
-            Name = request.Name
-        };
+            return TypedResults.Problem(
+                detail: result.Errors[0].ErrorMessage,
+                statusCode: StatusCodes.Status400BadRequest,
+                title: "Invalid Category name"
+            );
+        }
+        var budget = await budgetService.TryGetCurrentMonthAsync();
 
-        context.Categories.Add(category);
-        await context.SaveChangesAsync();
+        if ()
 
-        return TypedResults.Ok(new CreateCategoryResponse(category.Id, category.Name, 0, 0, 0));
+        // if (budget.IsSuccess && budget.Value is not null)
+        // {
+        //     var category = await categoryService.CreateCategoryAsync(request, budget.Value);
+        //     return TypedResults.Ok(category);
+        // }
+
+        // return TypedResults.Problem(
+        //     detail: budget.Error,
+        //     statusCode: StatusCodes.Status400BadRequest,
+        //     title: "No budget found for the current month"
+        // );
     }
 }

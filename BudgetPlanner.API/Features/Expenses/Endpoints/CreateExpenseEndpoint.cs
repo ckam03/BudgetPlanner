@@ -16,12 +16,16 @@ public sealed class CreateExpenseEndpoint : IEndpoint
         app.MapPost("/", HandleAsync).WithName("CreateExpense");
     }
 
-    public static async Task<CreatedAtRoute<CreateExpenseResponse>> HandleAsync([FromBody] CreateExpenseRequest request,
-                                                                                BudgetPlannerDbContext context)
+    public static async Task<CreatedAtRoute<CreateExpenseResponse>> HandleAsync(
+        [FromBody] CreateExpenseRequest request,
+        BudgetPlannerDbContext context
+    )
     {
-        Category category = await context.Categories
-            .Include(x => x.Expenses)
-            .FirstOrDefaultAsync(x => x.Id == request.Id) ?? throw new Exception("category not found");
+        Category category =
+            await context.Categories
+                .Include(x => x.Expenses)
+                .FirstOrDefaultAsync(x => x.Id == request.Id)
+            ?? throw new Exception("category not found");
 
         var expense = request.ToExpense(category);
         context.Expenses.Add(expense);

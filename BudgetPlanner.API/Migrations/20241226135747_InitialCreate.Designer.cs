@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BudgetPlanner.API.Migrations
 {
     [DbContext(typeof(BudgetPlannerDbContext))]
-    [Migration("20241119040723_InitialCreate")]
+    [Migration("20241226135747_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -31,11 +31,16 @@ namespace BudgetPlanner.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("MonthlyBudgetId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MonthlyBudgetId");
 
                     b.ToTable("Categories");
                 });
@@ -75,6 +80,31 @@ namespace BudgetPlanner.API.Migrations
                     b.ToTable("Expenses");
                 });
 
+            modelBuilder.Entity("BudgetPlanner.API.Models.MonthlyBudget", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly>("Month")
+                        .HasColumnType("date");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Budgets");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.API.Models.Category", b =>
+                {
+                    b.HasOne("BudgetPlanner.API.Models.MonthlyBudget", "MonthlyBudget")
+                        .WithMany("Categories")
+                        .HasForeignKey("MonthlyBudgetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MonthlyBudget");
+                });
+
             modelBuilder.Entity("BudgetPlanner.API.Models.Expense", b =>
                 {
                     b.HasOne("BudgetPlanner.API.Models.Category", "Category")
@@ -89,6 +119,11 @@ namespace BudgetPlanner.API.Migrations
             modelBuilder.Entity("BudgetPlanner.API.Models.Category", b =>
                 {
                     b.Navigation("Expenses");
+                });
+
+            modelBuilder.Entity("BudgetPlanner.API.Models.MonthlyBudget", b =>
+                {
+                    b.Navigation("Categories");
                 });
 #pragma warning restore 612, 618
         }

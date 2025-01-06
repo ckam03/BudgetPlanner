@@ -2,7 +2,8 @@ using BudgetPlanner.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddServices(builder.Configuration);
+builder.AddServiceDefaults();
+builder.Services.RegisterServices(builder.Configuration);
 
 var app = builder.Build();
 

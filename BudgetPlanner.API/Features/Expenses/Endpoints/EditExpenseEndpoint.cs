@@ -1,5 +1,5 @@
-﻿using BudgetPlanner.API.Data;
-using BudgetPlanner.API.Features.Expenses.Requests;
+﻿using BudgetPlanner.API.Features.Expenses.Requests;
+using BudgetPlanner.API.Features.Expenses.Services;
 using BudgetPlanner.API.Interfaces;
 using BudgetPlanner.API.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -14,19 +14,15 @@ public sealed class EditExpenseEndpoint : IEndpoint
         app.MapPut("/", HandleAsync);
     }
 
-    public static async Task<Results<Ok<Expense>, NotFound<string>>> HandleAsync(BudgetPlannerDbContext context,
-                                                                                 [FromBody] UpdateExpenseRequest request)
+    private static async Task<Results<Ok<Expense>, NotFound<string>>> HandleAsync(
+        [FromBody] UpdateExpenseRequest request,
+        ExpenseService expenseService
+    )
     {
-        var expense = await context.Expenses.FindAsync(request.Id);
+        var updatedExpense = await expenseService.UpdateExpenseAsync(request);
 
-        if (expense is null)
-        {
-            return TypedResults.NotFound("Expense not found");
-        }
-
-        var updatedExpense = expense.Update(request);
-        context.Expenses.Update(updatedExpense);
-        await context.SaveChangesAsync();
-        return TypedResults.Ok(expense);
+        return !updatedExpense.IsSuccess
+            ? TypedResults.NotFound(updatedExpense.Error)
+            : TypedResults.Ok(updatedExpense.Value);
     }
 }

@@ -14,11 +14,13 @@ public sealed class DeleteCategoryEndpoint : IEndpoint
         app.MapDelete("/", HandleAsync);
     }
 
-    public static async Task<DeleteCategoryResponse> HandleAsync(BudgetPlannerDbContext context,
-                                                                 [FromBody] DeleteCategoryRequest request)
+    public static async Task<DeleteCategoryResponse> HandleAsync(
+        BudgetPlannerDbContext context,
+        [FromBody] DeleteCategoryRequest request
+    )
     {
         var items = await context.Categories
-            .Where(x => request.Ids.Contains(x.Id))
+            .Where(category => request.Ids.Contains(category.Id))
             .ExecuteDeleteAsync();
 
         await context.SaveChangesAsync();

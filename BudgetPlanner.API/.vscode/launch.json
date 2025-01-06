@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "compounds": [
+        {
+            "name": "Run all",
+            "configurations": [
+                "Run api",
+            ]
+        }
+    ],
+    "configurations": [
+        {
+            "name": "Run api",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}\\Products\\BudgetPlanner.API.csproj"
+        },
+    ]
+}
